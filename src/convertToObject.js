@@ -10,16 +10,16 @@ function convertToObject(sourceString) {
     return {};
   }
 
-  const rules = sourceString.split(';');
-  const result = {};
+  return sourceString
+    .split(';')
+    .filter((rule) => rule.trim() !== '')
+    .reduce((stylesObject, rule) => {
+      const [key, value] = rule.split(':').map((item) => item.trim());
 
-  for (const rule of rules) {
-    const [key, value] = rule.split(':').map((item) => item.trim());
+      stylesObject[key] = value;
 
-    result[key] = value;
-  }
-
-  return result;
+      return stylesObject;
+    }, {});
 }
 
 module.exports = convertToObject;
